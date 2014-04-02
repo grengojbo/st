@@ -1,0 +1,35 @@
+{
+  "env": {
+    "GOROOT":"C:\\go",
+    "GOBIN":"F:\\Go\\bin",
+    "GOPATH": "F:\\go",
+    "GOARCH":"amd64",
+    "GOOS":"windows",
+    "PATH":"%GOBIN%;%PATH%"
+    },
+  "shell": ["$CMD"],
+  "fmt_cmd": ["goimports"],
+  "9o_aliases": {
+    "bee": "bee $_args",
+    },
+  "snippets": [
+    {
+      "match": {"global": true, "pkgname": "^models$"},
+      "snippets": [
+        {"text": "mstr", "title": "model string `...`", "value": "$0  string  `orm:\"size(255);null;index\"`"},
+        {"text": "mint", "title": "model integer `...`", "value": "$0  int     `orm:\"-\"`"},
+        {"text": "mdt", "title": "model datetime `...`", "value": "$0  time.Time `orm:\"auto_now_add;type(datetime);null\"`"},
+        {"text": "mpk", "title": "model primary `...`", "value": "$0  int64     `orm:\"auto;pk\"`"},
+        {"text": "sqlu", "title": "SQL UPDATE", "value": "${1:stmtIns}, err := db.Prepare(\"${2:UPDATE ${3:table} SET ${4:col} = ? WHERE ${5:string}}\")\n if err != nil {\n log.Fatal(\"Failed to execute: \", err.Error())\n }\n defer stmtIns.Close()$0"}
+      ]
+    },
+    {
+      "match": {"global": true, "pkgname": "^main$"},
+      "snippets": [
+        {"text": "gsu", "title": "SQL UPDATE", "value": "${1:stmtIns}, err := db.Prepare(\"${2:UPDATE ${3:table} SET ${4:col} = ? WHERE ${5:string}}\")\n if err != nil {\n log.Fatal(\"Failed to execute: \", err.Error())\n }\n defer ${1}.Close()$0"},
+        {"text": "gsqr", "title": "SQL QueryRow", "value": "${1:var ${2:id} ${3:int}\n}if err = ${4:db}.QueryRow(\"${5:SELECT ${2} FROM ${6:table} WHERE ${7:${8:col}=?}}\", ${9:args}).Scan(&${2}); err != nil {\n  log.Fatal(err.Error())\n  }$0"},
+        {"text": "gsi", "title": "SQL INSERT", "value": "${}"}
+      ]
+    }
+  ]
+}
